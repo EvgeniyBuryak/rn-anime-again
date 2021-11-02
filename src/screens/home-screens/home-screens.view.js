@@ -1,15 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { getListAnime } from "../../api/anime.api";
+import ResultsList from "./views/results-list.view";
 
 const HomeScreen = () => {
-    const [results, setResults] = useState(null);
-
-    const keyExtractor = useCallback( item => item.id.toString(), []);
-    const renderItem = useCallback( ({item}) => {
-        
-        return <Text> {item.attributes.titles.en} </Text>
-    }, []);
+    const [results, setResults] = useState(null);    
 
     const getResults = () => {
         const response = new Promise((resolve, reject) => {
@@ -28,19 +23,16 @@ const HomeScreen = () => {
     }, []);
 
     return (
-        <View>
-            <Text>
-                Home Screen
-            </Text>
-            <FlatList
-                data={results}
-                keyExtractor={keyExtractor}
-                renderItem={renderItem}
-            />
+        <View style={ styles.container }>
+            <ResultsList results={results}/>
         </View>
     );
 };
 
-const styles = StyleSheet.create();
+const styles = StyleSheet.create({
+    container: {
+        marginLeft: 10,
+    }
+});
 
 export default HomeScreen;
