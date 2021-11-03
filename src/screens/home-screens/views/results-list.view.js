@@ -1,21 +1,22 @@
 import React, { useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import ResultsDetail from './results-detail.view';
+import { withNavigation } from 'react-navigation';
 
-const ResultsList = ({ results }) => {
+const ResultsList = ({ results, navigation }) => {
 
     const keyExtractor = useCallback( item => item.id.toString(), []);
     const renderItem = useCallback( ({item}) => {        
-        return (
-            <View>                
+        return (            
+            <TouchableOpacity onPress={() => navigation.navigate('ResultsShow', { id: item.id })}>
                 <ResultsDetail result={item}/>
-            </View>
-        );
-    }, []);
+            </TouchableOpacity>
+        )}, []);
 
     return (
         <View>
             <FlatList
+                showsVerticalScrollIndicator={false}
                 data={results}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
@@ -24,8 +25,4 @@ const ResultsList = ({ results }) => {
     );
 };
 
-const styles = StyleSheet.create({
-    
-});
-
-export default ResultsList;
+export default withNavigation(ResultsList);

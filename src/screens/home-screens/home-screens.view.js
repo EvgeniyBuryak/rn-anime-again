@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet } from 'react-native';
 import { getListAnime } from "../../api/anime.api";
 import ResultsList from "./views/results-list.view";
 
@@ -24,7 +24,7 @@ const HomeScreen = () => {
 
     return (
         <View style={ styles.container }>
-            <ResultsList results={results}/>
+            <ResultsList results={results} />
         </View>
     );
 };
