@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from 'react-native';
 import { getListAnime } from "../../api/anime.api";
 import ResultsList from "./views/results-list.view";
+import SearchBar from "./views/search-bar.view";
 
 const HomeScreen = () => {
     const [results, setResults] = useState(null);    
@@ -24,6 +25,7 @@ const HomeScreen = () => {
 
     return (
         <View style={ styles.container }>
+            <SearchBar />
             <ResultsList results={results} />
         </View>
     );
