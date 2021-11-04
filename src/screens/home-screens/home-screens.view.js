@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { getListAnime } from "../../api/anime.api";
 import ResultsList from "./views/results-list.view";
 import SearchBar from "./views/search-bar.view";
 
 const HomeScreen = () => {
-    const [results, setResults] = useState(null);    
+    const [results, setResults] = useState(null);  
+    const [term , setTerm] = useState('');  
 
     const getResults = () => {
         const response = new Promise((resolve, reject) => {
@@ -25,7 +26,12 @@ const HomeScreen = () => {
 
     return (
         <View style={ styles.container }>
-            <SearchBar />
+            <SearchBar 
+                term={term} 
+                onTermChange={(newTerm) => setTerm(newTerm)} 
+                onTermSubmit={() => console.log('Term was submitted')}
+            />
+            <Text>{term}</Text>
             <ResultsList results={results} />
         </View>
     );
