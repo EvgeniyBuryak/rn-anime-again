@@ -4,7 +4,7 @@ const getSingleAnime = async (id) => {
 
     const requestSingleAnime = axios.create({
         baseURL: 'https://kitsu.io/api/edge/anime',
-        header: { 'content-type': 'application/vnd.api+json' },
+        headers: { 'content-type': 'application/vnd.api+json' },
         params: {
             'filter[id]': id,
         }
