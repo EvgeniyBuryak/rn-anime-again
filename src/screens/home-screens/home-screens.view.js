@@ -8,10 +8,10 @@ const HomeScreen = () => {
     const [results, setResults] = useState(null);  
     const [term , setTerm] = useState('');  
 
-    const getResults = () => {
+    const getResults = (searchTerm) => {
         const response = new Promise((resolve, reject) => {
-            const result = getListAnime();
-
+            const result = getListAnime(searchTerm);
+            
             resolve(result);
             reject(new Error("Ошибка"));
         });
@@ -21,8 +21,8 @@ const HomeScreen = () => {
     };
 
     useEffect(()=>{
-        getResults();
-    }, []);
+        getResults(term);
+    }, [term]);
 
     return (
         <View style={ styles.container }>
@@ -32,6 +32,7 @@ const HomeScreen = () => {
                 onTermSubmit={() => console.log('Term was submitted')}
             />
             <Text>{term}</Text>
+            <Text>Results length: {console.log(results.length)}</Text>
             <ResultsList results={results} />
         </View>
     );
