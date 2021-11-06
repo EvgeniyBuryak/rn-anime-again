@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { ScrollView, Text, StyleSheet, Image } from "react-native";
 
 const ResultsDetail = ({ result }) => {
     const [averageRating, setAverageRating] = useState('');
@@ -15,23 +15,36 @@ const ResultsDetail = ({ result }) => {
     }, []);
 
     return (
-        <View style={ styles.container }>
-            <Text>{ result.attributes.canonicalTitle }</Text>
-            <Text>Description: { desciption }</Text>
-            <Image style={ styles.image } source={{ uri: result.attributes.posterImage.tiny }}/>
-            <Text>Average Rating: { averageRating }</Text>
-        </View>
+        <ScrollView style={ styles.container }>
+            <Text style={styles.title}>{ result.attributes.canonicalTitle }</Text>
+            <Image style={styles.image} source={{ uri: result.attributes.posterImage.tiny }}/>
+            <Text style={styles.description}>Description: { desciption.substring(0, 150) }</Text>
+            <Text style={styles.rating}>Average Rating: { averageRating }</Text>
+        </ScrollView>
     )
 };
 
 const styles = StyleSheet.create({
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    description: {
+        fontWeight: 'bold',
+    },
+    rating: {
+        marginVertical: 5
+    },
     container: {
         marginTop: 15,
+        marginLeft: 15,
+        
     },
     image: {
         width: 150,
         height: 260,
-        borderRadius: 1
+        marginVertical: 5,
+        borderRadius: 5,
     }
 });
 
