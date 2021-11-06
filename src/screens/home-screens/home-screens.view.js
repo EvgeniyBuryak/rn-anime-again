@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text } from 'react-native';
 import { getListAnime } from "../../api/anime.api";
 import ResultsList from "./views/results-list.view";
@@ -20,19 +20,15 @@ const HomeScreen = () => {
         .catch((err) => console.log('Ошибка'));
     };
 
-    useEffect(()=>{
-        getResults(term);
-    }, [term]);
-
     return (
         <View style={ styles.container }>
             <SearchBar 
                 term={term} 
                 onTermChange={(newTerm) => setTerm(newTerm)} 
-                onTermSubmit={() => console.log('Term was submitted')}
+                onTermSubmit={() => getResults(term)}
             />
             <Text>{term}</Text>
-            <Text>Results length: {console.log(results.length)}</Text>
+            <Text>Results length: {results.length}</Text>
             <ResultsList results={results} />
         </View>
     );
