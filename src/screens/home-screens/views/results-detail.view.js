@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { ScrollView, Text, StyleSheet, Image } from "react-native";
 
 const ResultsDetail = ({ result }) => {
-    const [averageRating, setAverageRating] = useState('');
-    const [desciption, setDescription] = useState('');
 
-    const ratingIsExist = () => {
-        setAverageRating(result.attributes.averageRating ?? 'не установлено');
-        setDescription(result.attributes.description ?? 'не установлено');
+    const isExist = (result) => {
+        return result ?? 'не установлено';
     };
-
-    useEffect(()=>{
-        ratingIsExist();
-    }, []);
 
     return (
         <ScrollView style={ styles.container }>
             <Text style={styles.title}>{ result.attributes.canonicalTitle }</Text>
             <Image style={styles.image} source={{ uri: result.attributes.posterImage.tiny }}/>
-            <Text style={styles.description}>Description: { desciption.substring(0, 150) }</Text>
-            <Text style={styles.rating}>Average Rating: { averageRating }</Text>
+            <Text style={styles.description}>Description: { isExist(result.attributes.description).substring(0, 150) }</Text>
+            <Text style={styles.rating}>Average Rating: { isExist(result.attributes.averageRating) }</Text>
         </ScrollView>
     )
 };
