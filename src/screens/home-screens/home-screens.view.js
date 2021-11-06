@@ -21,23 +21,17 @@ const HomeScreen = () => {
     };
 
     return (
-        <View style={ styles.container }>
+        <>
             <SearchBar 
                 term={term} 
                 onTermChange={(newTerm) => setTerm(newTerm)} 
                 onTermSubmit={() => getResults(term)}
-            />
-            <Text>{term}</Text>
-            <Text>Results length: {results.length}</Text>
+            />                        
             <ResultsList results={results} />
-        </View>
+        </>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        marginLeft: 10,
-    }
-});
+const styles = StyleSheet.create({});
 
 export default HomeScreen;

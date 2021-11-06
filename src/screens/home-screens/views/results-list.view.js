@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import ResultsDetail from './results-detail.view';
 import { withNavigation } from 'react-navigation';
 
@@ -14,14 +14,14 @@ const ResultsList = ({ results, navigation }) => {
         )}, []);
 
     return (
-        <View>
+        <>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={results}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
             />
-        </View>
+        </>
     );
 };
 
