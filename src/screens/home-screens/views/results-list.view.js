@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
-import { ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import ResultsDetail from './results-detail.view';
 import { withNavigation } from 'react-navigation';
 
-const ResultsList = ({ results, navigation }) => {
+const ResultsList = ({ results, navigation, onRefresh, refreshing }) => {
+    
 
     const keyExtractor = useCallback( item => item.id.toString(), []);
     const renderItem = useCallback( ({item}) => {        
@@ -20,6 +21,12 @@ const ResultsList = ({ results, navigation }) => {
                 data={results}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
             />
         </>
     );

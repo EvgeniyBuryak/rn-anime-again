@@ -1,33 +1,59 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useState, useCallback } from "react";
+import { StyleSheet } from 'react-native';
+import { useEffect } from "react/cjs/react.development";
 import { getListAnime } from "../../api/anime.api";
 import ResultsList from "./views/results-list.view";
 import SearchBar from "./views/search-bar.view";
 
 const HomeScreen = () => {
     const [results, setResults] = useState(null);  
-    const [term , setTerm] = useState('');  
+    const [term , setTerm] = useState('');
+    const [refreshing, setRefreshing] = useState(false);
 
-    const getResults = (searchTerm) => {
-        const response = new Promise((resolve, reject) => {
-            const result = getListAnime(searchTerm);
-            
-            resolve(result);
-            reject(new Error("Ошибка"));
-        });
-
-        response.then( res => setResults(res))
-        .catch((err) => console.log('Ошибка'));
+    const getResults = async (searchTerm = "space") => {
+        setRefreshing(true);
+    
+        try {
+            const res = await getListAnime(searchTerm);
+                                
+            setResults(res);            
+        } catch {
+            console.log('Ошибка');
+        }
+        finally {
+            setRefreshing(false);
+        }
     };
 
+    const handleRefresh = useCallback(() => {        
+        //console.log(term);
+        getResults(term);
+    },[term]);
+
+    //оптимизировать
+    const handleTermChange = useCallback((newTerm) => {
+        //console.log(newTerm);
+        setTerm(newTerm)        
+    },[]);
+
+    const handleTermSubmit = useCallback(()=>{
+        getResults(term);
+    },[term]);
+    // Шпоры - хуки аналоги жизненого цикла
+    // DidMount
+    // WillMount
+    useEffect(()=>{
+        getResults();
+    },[]);
+    //textInput onClear, onBlure - вызывается при очистке поля
     return (
         <>
             <SearchBar 
                 term={term} 
-                onTermChange={(newTerm) => setTerm(newTerm)} 
-                onTermSubmit={() => getResults(term)}
-            />                        
-            <ResultsList results={results} />
+                onTermChange={handleTermChange} 
+                onTermSubmit={handleTermSubmit}
+            />
+            <ResultsList results={results} onRefresh={handleRefresh} refreshing={refreshing}/>
         </>
     );
 };
